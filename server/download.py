@@ -3,6 +3,7 @@ from __future__ import print_function
 
 import argparse
 import logging
+import os
 import sys
 import time
 
@@ -14,6 +15,8 @@ LOG_FORMAT = '%(asctime)-15s %(name)-10s %(levelname)-7s %(message)s'
 # once helps avoid lockups/hangs on the android side.
 MAX_PER_CONN = 10
 
+DEFAULT_DEST_DIR = os.path.expanduser("~/timelapse")
+
 def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('ip', help="IP address of camera")
@@ -21,7 +24,12 @@ def parse_args(argv):
                         help="Port number of ssh server on camera")
     parser.add_argument('username', help="Username for ssh server")
     parser.add_argument('password', help="Password for ssh server")
-    return parser.parse_args(argv[1:])
+    parser.add_argument('--dest-dir', default=DEFAULT_DEST_DIR,
+                        help="Directory to download photos to")
+    args = parser.parse_args(argv[1:])
+    if not os.path.isdir(args.dest_dir):
+        parser.error("--dest-dir {} must exist".format(args.dest_dir))
+    return args
 
 def download_some(args):
     some_downloaded = False
@@ -33,7 +41,9 @@ def download_some(args):
         file_names = sftp.listdir()
         logger.info("Found %d files", len(file_names))
         for i, file_name in enumerate(file_names[:MAX_PER_CONN]):
-            logger.info("Downloading %d/%d: %s", i+1, len(file_names), file_name)
+            dest_file_name = os.path.join(args.dest_dir, file_name)
+            logger.info("Downloading %d/%d: %s => %s", i+1, len(file_names),
+                        file_name, dest_file_name)
             sftp.get(file_name)
             logger.info("Removing %s", file_name)
             sftp.unlink(file_name)
