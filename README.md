@@ -8,4 +8,12 @@ An old Android phone, with camera and wifi. In my case a [HTC Hero](http://en.wi
 * [SSH Server](https://play.google.com/store/apps/details?id=com.icecoldapps.sshserver)
 * [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm)
 
+## How to run
 Copy the Tasker configuration [userbackup.xml](userbackup.xml) into the Tasker directory at the root of the sdcard of the phone. From within Tasker, import this (Menu, Data, Restore). The config makes use of the [getFormattedDate task](http://tasker.wikidot.com/getformatteddate) for Tasker.
+
+On the server, setup a virtualenv and install the python requirements
+
+    mkvirtualenv timelapse
+    pip install -r server/requirements.txt
+
+Run download.py to download all the photos that have been taken, and remove them from the phone.
