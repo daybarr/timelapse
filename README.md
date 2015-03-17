@@ -3,7 +3,7 @@ Hacks for using an old android phone as a wireless time lapse camera, powered wi
 
 ## Requirements
 
-* An old Android phone, with camera and wifi. In my case a [HTC Hero](http://en.wikipedia.org/wiki/HTC_Hero) running [CyanogenMod 7](http://www.cyanogenmod.org/).
+* An old Android phone, with camera and wifi. In my case a 2010 era [HTC Hero](http://en.wikipedia.org/wiki/HTC_Hero) running [CyanogenMod 7](http://www.cyanogenmod.org/).
 * A server capable of running python on the same LAN as the phone.
 * A power source. In my case this hack must be self-sufficient as there is no access to mains power. The [7W USB solar charger](http://www.amazon.co.uk/gp/product/B00BU38MG0/ref=as_li_tl?ie=UTF8&camp=1634&creative=19450&creativeASIN=B00BU38MG0&linkCode=as2&tag=daybarrcom-21&linkId=7BZTGS5ZNT6V6D7R) from PortaPow is ideal for this job.
 * Some string, glue, tape and other bodgey hardware pieces to hold the phone in the appropriate position, give a clear view for the camera, but somehow protect it from the British weather.
