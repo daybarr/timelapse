@@ -1,38 +1,63 @@
 <TaskerData sr="" dvi="1" tv="1.6u2m">
 	<Profile sr="prof2" ve="2">
 		<cdate>1426251070573</cdate>
-		<edate>1426551191069</edate>
+		<edate>1426671881440</edate>
+		<flags>2</flags>
 		<id>2</id>
 		<mid0>3</mid0>
 		<nme>Take Photos</nme>
 		<Time sr="con0">
-			<fh>6</fh>
-			<fm>0</fm>
+			<fh>-1</fh>
+			<fm>-1</fm>
 			<rep>2</rep>
 			<repval>2</repval>
-			<th>18</th>
-			<tm>30</tm>
+			<th>-1</th>
+			<tm>-1</tm>
 		</Time>
+		<State sr="con1">
+			<code>142</code>
+			<Str sr="arg0" ve="3">Photo Time</Str>
+		</State>
 	</Profile>
 	<Profile sr="prof4" ve="2">
 		<cdate>1426458750584</cdate>
-		<edate>1426458859570</edate>
+		<edate>1426680398837</edate>
 		<flags>2</flags>
 		<id>4</id>
 		<mid0>5</mid0>
 		<mid1>6</mid1>
-		<nme>Wifi</nme>
+		<nme>Wifi On</nme>
+		<State sr="con0">
+			<code>10</code>
+			<Int sr="arg0" val="0"/>
+		</State>
+		<State sr="con1">
+			<code>142</code>
+			<Str sr="arg0" ve="3">Photo Time</Str>
+		</State>
+		<State sr="con2">
+			<code>140</code>
+			<Int sr="arg0" val="75"/>
+			<Int sr="arg1" val="100"/>
+		</State>
+	</Profile>
+	<Profile sr="prof7" ve="2">
+		<cdate>1426671718861</cdate>
+		<edate>1426684369595</edate>
+		<flags>2</flags>
+		<id>7</id>
+		<mid0>12</mid0>
+		<nme>Photo Time</nme>
 		<Time sr="con0">
 			<fh>6</fh>
 			<fm>0</fm>
-			<th>8</th>
+			<th>19</th>
 			<tm>30</tm>
 		</Time>
 	</Profile>
 	<Profile sr="prof8" ve="2">
 		<cdate>1426537255959</cdate>
 		<edate>1426549864228</edate>
-		<flags>2</flags>
 		<id>8</id>
 		<mid0>9</mid0>
 		<nme>Battery</nme>
@@ -43,9 +68,9 @@
 	</Profile>
 	<Project sr="proj0">
 		<cdate>1426249583355</cdate>
-		<mdate>1426550406122</mdate>
+		<mdate>1426684356078</mdate>
 		<name>Base</name>
-		<pids>2,4,8</pids>
+		<pids>7,2,4,8</pids>
 		<tids>3,5,6,9,10</tids>
 		<Img sr="icon" ve="2">
 			<icn>2130837535</icn>
@@ -119,6 +144,16 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 			<Int sr="arg1" val="1"/>
 		</Action>
 	</Task>
+	<Task sr="task12">
+		<cdate>1426684308881</cdate>
+		<edate>1426684369595</edate>
+		<id>12</id>
+		<nme>NOOP</nme>
+		<Action sr="act0" ve="3">
+			<code>300</code>
+			<label>NOOP</label>
+		</Action>
+	</Task>
 	<Task sr="task3">
 		<cdate>1426251088004</cdate>
 		<edate>1426551713355</edate>
@@ -190,7 +225,7 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 	</Task>
 	<Task sr="task9">
 		<cdate>1426537283491</cdate>
-		<edate>1426551895590</edate>
+		<edate>1426598429018</edate>
 		<id>9</id>
 		<nme>Record Battery Level</nme>
 		<pri>10</pri>
@@ -213,7 +248,7 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 		<Action sr="act2" ve="3">
 			<code>410</code>
 			<Str sr="arg0" ve="3">%logfile</Str>
-			<Str sr="arg1" ve="3">%timestamp %BATT</Str>
+			<Str sr="arg1" ve="3">{"time"="%timestamp", "battery"="%BATT", "light"="%LIGHT"}</Str>
 			<Int sr="arg2" val="1"/>
 			<Int sr="arg3" val="1"/>
 		</Action>
