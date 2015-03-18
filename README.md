@@ -5,7 +5,7 @@ Hacks for using an old android phone as a wireless time lapse camera, powered wi
 
 * **The Camera** - An Android device, with camera and WiFi.
     * In my case a 2010 era [HTC Hero](http://en.wikipedia.org/wiki/HTC_Hero) running [CyanogenMod 7](http://www.cyanogenmod.org/).
-* **The Server** - Any mains powered device capable of running python and on the same LAN as the Camera's WiFi.
+* **The Server** - Any mains powered device capable of running python and ffmpeg. Must be on the same LAN as the Camera's WiFi.
     * In my case, a [Raspberry Pi Model B](http://www.raspberrypi.org/products/model-b/) in my garage.
 
 If the Camera is going to be outside, as in my case, you will also need:
