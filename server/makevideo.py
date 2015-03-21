@@ -21,7 +21,7 @@ def parse_args(argv):
 
 def make_vid(args):
     # ffmpeg -f image2 -framerate 25 -r 30
-    # -pattern_type glob -i '*.jpg' -s 720x480 movie.mp4
+    # -pattern_type glob -i '*.jpg' -s 720x540 movie.mp4
     ffmpeg = sh.Command('/usr/bin/ffmpeg')
     ffmpeg(
         '-f', 'image2',
@@ -29,7 +29,7 @@ def make_vid(args):
         '-r', 30,
         '-pattern_type', 'glob',
         '-i', os.path.join(args.src_dir, '*.jpg'),
-        '-s', '720x480',
+        '-s', '720x540',
         'movie.mp4',
         _out=sys.stdout,
         _err=sys.stderr,
