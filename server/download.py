@@ -16,6 +16,8 @@ MAX_PER_CONN = 10
 
 DEFAULT_DEST_DIR = os.path.expanduser("~/timelapse")
 
+LOG_FILE_NAME = 'battery.txt'
+
 def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('ip', help="IP address of camera")
@@ -39,14 +41,22 @@ def download_some(args):
         logger.info("Listing files")
         file_names = sftp.listdir()
         logger.info("Found %d files", len(file_names))
-        for i, file_name in enumerate(file_names[:MAX_PER_CONN]):
+
+        images = [name for name in file_names if name.endswith('.jpg')]
+        for i, file_name in enumerate(images[:MAX_PER_CONN]):
             dest_file_name = os.path.join(args.dest_dir, file_name)
             logger.info("Downloading %d/%d: %s => %s", i+1, len(file_names),
                         file_name, dest_file_name)
-            sftp.get(file_name)
+            sftp.get(file_name, dest_file_name)
             logger.info("Removing %s", file_name)
             sftp.unlink(file_name)
             some_downloaded = True
+
+        if LOG_FILE_NAME in file_names:
+            dest_file_name = os.path.join(args.dest_dir, LOG_FILE_NAME)
+            logger.info("Downloading log => %s", dest_file_name)
+            sftp.get(LOG_FILE_NAME, dest_file_name)
+
     return some_downloaded
 
 if __name__ == "__main__":
