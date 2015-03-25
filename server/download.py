@@ -21,11 +21,13 @@ DEFAULT_PRIVATE_KEY = os.path.expanduser("~/.ssh/id_rsa")
 LOG_FILE_NAME = 'battery.txt'
 
 def parse_args(argv):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('ip', help="IP address of camera")
     parser.add_argument('port', type=int,
                         help="Port number of ssh server on camera")
-    parser.add_argument('username', help="Username for ssh server")
+    parser.add_argument('--username', default=os.getlogin(),
+                        help="Username for ssh server")
     parser.add_argument('--password', default=None,
                         help="Password for ssh server")
     parser.add_argument('--private-key', default=DEFAULT_PRIVATE_KEY,
