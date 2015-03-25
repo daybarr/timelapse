@@ -14,8 +14,9 @@ LOG_FORMAT = '%(asctime)-15s %(name)-10s %(levelname)-7s %(message)s'
 # once helps avoid lockups/hangs on the android side.
 MAX_PER_CONN = 10
 
-DEFAULT_SRC_DIR = os.path.expanduser("/mnt/sdcard/timelapse")
+DEFAULT_SRC_DIR = "/mnt/sdcard/timelapse"
 DEFAULT_DEST_DIR = os.path.expanduser("~/timelapse")
+DEFAULT_PRIVATE_KEY = os.path.expanduser("~/.ssh/id_rsa")
 
 LOG_FILE_NAME = 'battery.txt'
 
@@ -25,7 +26,10 @@ def parse_args(argv):
     parser.add_argument('port', type=int,
                         help="Port number of ssh server on camera")
     parser.add_argument('username', help="Username for ssh server")
-    parser.add_argument('password', help="Password for ssh server")
+    parser.add_argument('--password', default=None,
+                        help="Password for ssh server")
+    parser.add_argument('--private-key', default=DEFAULT_PRIVATE_KEY,
+                        help="Private key for ssh connection")
     parser.add_argument('--dest-dir', default=DEFAULT_DEST_DIR,
                         help="Directory to download photos to")
     parser.add_argument('--src-dir', default=DEFAULT_SRC_DIR,
@@ -40,7 +44,8 @@ def download_some(args):
     logger.info("Connecting")
     with pysftp.Connection(args.ip, port=args.port,
                            username=args.username,
-                           password=args.password) as sftp, \
+                           password=args.password,
+                           private_key=args.private_key) as sftp, \
         sftp.cd(args.src_dir):
 
         logger.info("Listing files")
