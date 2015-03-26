@@ -43,6 +43,12 @@ def parse_args(argv):
         parser.error("--dest-dir {} must exist".format(args.dest_dir))
     return args
 
+def download_and_remove(sftp, remote_file_name, local_file_name):
+    logger.info("Downloading %s => %s", remote_file_name, local_file_name)
+    sftp.get(remote_file_name, local_file_name)
+    logger.info("Removing %s", remote_file_name)
+    sftp.unlink(remote_file_name)
+
 def download_some(args):
     some_downloaded = False
     logger.info("Connecting")
@@ -57,37 +63,29 @@ def download_some(args):
         logger.info("Found %d files", len(file_names))
 
         images = [name for name in file_names if name.endswith('.jpg')]
-        for i, file_name in enumerate(images[:MAX_PER_CONN]):
-            dest_file_name = os.path.join(args.dest_dir, file_name)
-            logger.info("Downloading image %d/%d: %s => %s", i+1, len(images),
-                        file_name, dest_file_name)
-            sftp.get(file_name, dest_file_name)
-            logger.info("Removing %s", file_name)
-            sftp.unlink(file_name)
+        for i, remote_file_name in enumerate(images[:MAX_PER_CONN]):
+            logger.info("Image %d/%d", i+1, len(images))
+            local_file_name = os.path.join(args.dest_dir, remote_file_name)
+            download_and_remove(sftp, remote_file_name, local_file_name)
             some_downloaded = True
 
-        suffix = datetime.datetime.now().strftime('.%Y%m%d-%H%M%S')
         if LOG_FILE_NAME in file_names:
-            remote_name = LOG_FILE_NAME + suffix
-            dest_file_name = os.path.join(args.dest_dir, remote_name)
-            logger.info("Renaming log => %s", remote_name)
-            sftp.rename(LOG_FILE_NAME, remote_name)
-            time.sleep(1)
-            logger.info("Downloading log => %s", dest_file_name)
-            sftp.get(remote_name, dest_file_name)
-            logger.info("Removing %s", remote_name)
-            sftp.unlink(file_name)
+            suffix = datetime.datetime.now().strftime('.%Y%m%d-%H%M%S')
+            remote_file_name = LOG_FILE_NAME + suffix
+            logger.info("Renaming log => %s", remote_file_name)
+            sftp.rename(LOG_FILE_NAME, remote_file_name)
 
-        # Failed logs
+            time.sleep(1)
+
+            local_file_name = os.path.join(args.dest_dir, remote_file_name)
+            download_and_remove(sftp, remote_file_name, local_file_name)
+
+        # Failed log downloads
         logs = [name for name in file_names if name.startswith(LOG_FILE_NAME)
                 and len(name) > len(LOG_FILE_NAME)]
-        for i, file_name in enumerate(logs):
-            dest_file_name = os.path.join(args.dest_dir, file_name)
-            logger.info("Downloading %d/%d: %s => %s", i+1, len(logs),
-                        file_name, dest_file_name)
-            sftp.get(file_name, dest_file_name)
-            logger.info("Removing %s", file_name)
-            sftp.unlink(file_name)
+        for i, remote_file_name in enumerate(logs):
+            local_file_name = os.path.join(args.dest_dir, remote_file_name)
+            download_and_remove(sftp, remote_file_name, local_file_name)
 
     return some_downloaded
 
