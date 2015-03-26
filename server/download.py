@@ -2,9 +2,11 @@
 from __future__ import print_function
 
 import argparse
+import datetime
 import logging
 import os
 import sys
+import time
 
 import pysftp
 
@@ -12,7 +14,7 @@ LOG_FORMAT = '%(asctime)-15s %(name)-10s %(levelname)-7s %(message)s'
 
 # max number of files to download per sftp connection - not getting them all at
 # once helps avoid lockups/hangs on the android side.
-MAX_PER_CONN = 10
+MAX_PER_CONN = 20
 
 DEFAULT_SRC_DIR = "/mnt/sdcard/timelapse"
 DEFAULT_DEST_DIR = os.path.expanduser("~/timelapse")
@@ -57,17 +59,35 @@ def download_some(args):
         images = [name for name in file_names if name.endswith('.jpg')]
         for i, file_name in enumerate(images[:MAX_PER_CONN]):
             dest_file_name = os.path.join(args.dest_dir, file_name)
-            logger.info("Downloading %d/%d: %s => %s", i+1, len(file_names),
+            logger.info("Downloading image %d/%d: %s => %s", i+1, len(images),
                         file_name, dest_file_name)
             sftp.get(file_name, dest_file_name)
             logger.info("Removing %s", file_name)
             sftp.unlink(file_name)
             some_downloaded = True
 
+        suffix = datetime.datetime.now().strftime('.%Y%m%d-%H%M%S')
         if LOG_FILE_NAME in file_names:
-            dest_file_name = os.path.join(args.dest_dir, LOG_FILE_NAME)
+            remote_name = LOG_FILE_NAME + suffix
+            dest_file_name = os.path.join(args.dest_dir, remote_name)
+            logger.info("Renaming log => %s", remote_name)
+            sftp.rename(LOG_FILE_NAME, remote_name)
+            time.sleep(1)
             logger.info("Downloading log => %s", dest_file_name)
-            sftp.get(LOG_FILE_NAME, dest_file_name)
+            sftp.get(remote_name, dest_file_name)
+            logger.info("Removing %s", remote_name)
+            sftp.unlink(file_name)
+
+        # Failed logs
+        logs = [name for name in file_names if name.startswith(LOG_FILE_NAME)
+                and len(name) > len(LOG_FILE_NAME)]
+        for i, file_name in enumerate(logs):
+            dest_file_name = os.path.join(args.dest_dir, file_name)
+            logger.info("Downloading %d/%d: %s => %s", i+1, len(logs),
+                        file_name, dest_file_name)
+            sftp.get(file_name, dest_file_name)
+            logger.info("Removing %s", file_name)
+            sftp.unlink(file_name)
 
     return some_downloaded
 
