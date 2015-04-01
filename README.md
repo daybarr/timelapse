@@ -5,7 +5,7 @@ Hacks for using an old android phone as a wireless time lapse camera, powered wi
 
 * **The Camera** - An Android device, with camera and WiFi.
     * In my case a 2010 era [HTC Hero](http://en.wikipedia.org/wiki/HTC_Hero) running [CyanogenMod 7](http://www.cyanogenmod.org/).
-* **The Server** - Any mains powered device capable of running python and ffmpeg. Must be on the same LAN as the Camera's WiFi.
+* **The Computer** - Any mains powered device capable of running python and ffmpeg. Must be on the same LAN as the Camera's WiFi.
     * In my case, a [Raspberry Pi Model B](http://www.raspberrypi.org/products/model-b/) in my garage.
 
 If the Camera is going to be outside, as in my case, you will also need:
@@ -20,9 +20,9 @@ If the Camera is going to be outside, as in my case, you will also need:
 
 The Camera automatically takes a photo every 2 minutes, during the required daylight hours. Photos are saved to the SD card with a timestamped file name.
 
-The Server continually attempts to connect to the Camera and download the photos from it. Once a photo is safely stored on the Server, it is removed from the Camera so the SD card doesn't fill up.
+The Computer continually attempts to connect to the Camera and download the photos from it. Once a photo is safely stored on the Computer, it is removed from the Camera so the SD card doesn't fill up.
 
-The Camera's WiFi is only activated during daylight, when the Camera is being charged by the solar panel. So the Server must cope with losing the connection to the Camera at any time.
+The Camera's WiFi is only activated during daylight, when the Camera is being charged by the solar panel. So the Computer must cope with losing the connection to the Camera at any time.
 
 At night, the Camera stops taking photos, turns off the WiFi and stops the SSH Server, thus conserving power until the sun starts charging it again the next day. The battery in the Camera should be sufficient to see it through the dark zone, especially if you remove the SIM card and disable mobile networks (where applicable - recommended for security reasons anyway).
 
@@ -40,17 +40,17 @@ Credit: My Tasker config makes use of this [getFormattedDate task](http://tasker
 
 #### SSH Server
 
-For the Server to connect to so it can download and delete photos from the Camera.
+For the Computer to connect to so it can download and delete photos from the Camera.
 
 Install [SSH Server](https://play.google.com/store/apps/details?id=com.icecoldapps.sshserver) from the Play Store.
 
 In the SSH Server app, add a connection and user with access to the SD card (`/mnt/sdcard`) and set it to start automatically at boot, and when the SSID of your WiFi network is available.
 
-### Server
+### Computer
 
-On the Server, setup/activate a virtualenv and install the python requirements
+On the Computer, setup/activate a virtualenv and install the python requirements
 
     mkvirtualenv timelapse
-    pip install -r server/requirements.txt
+    pip install -r computer/requirements.txt
 
-Run `server/download.py` to download all the photos that have been taken, and remove them from the Camera.
+Run `computer/download.py` to download all the photos that have been taken, and remove them from the Camera.
