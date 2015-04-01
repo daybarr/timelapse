@@ -15,23 +15,9 @@
 			<tm>-1</tm>
 		</Time>
 	</Profile>
-	<Profile sr="prof14" ve="2">
-		<cdate>1426458750584</cdate>
-		<edate>1427829973638</edate>
-		<flags>2</flags>
-		<id>14</id>
-		<mid0>6</mid0>
-		<nme>Wifi Off</nme>
-		<State sr="con0">
-			<code>142</code>
-			<pin>true</pin>
-			<Str sr="arg0" ve="3">Wifi On</Str>
-		</State>
-	</Profile>
 	<Profile sr="prof15" ve="2">
 		<cdate>1426537255959</cdate>
 		<edate>1427840348834</edate>
-		<flags>2</flags>
 		<id>15</id>
 		<mid0>9</mid0>
 		<mid1>9</mid1>
@@ -42,6 +28,59 @@
 			<Str sr="arg1" ve="3"/>
 			<Str sr="arg2" ve="3"/>
 		</State>
+	</Profile>
+	<Profile sr="prof17" ve="2">
+		<cdate>1427845625341</cdate>
+		<edate>1427845714584</edate>
+		<flags>2</flags>
+		<id>17</id>
+		<mid0>5</mid0>
+		<nme>Ensure Wifi On</nme>
+		<State sr="con0">
+			<code>142</code>
+			<Str sr="arg0" ve="3">Wifi On</Str>
+		</State>
+		<State sr="con1">
+			<code>165</code>
+			<Str sr="arg0" ve="3">%WIFI</Str>
+			<Int sr="arg1" val="2"/>
+			<Str sr="arg2" ve="3">on</Str>
+		</State>
+		<Time sr="con2">
+			<fh>-1</fh>
+			<fm>-1</fm>
+			<rep>2</rep>
+			<repval>2</repval>
+			<th>-1</th>
+			<tm>-1</tm>
+		</Time>
+	</Profile>
+	<Profile sr="prof18" ve="2">
+		<cdate>1427845625341</cdate>
+		<edate>1427846035299</edate>
+		<flags>2</flags>
+		<id>18</id>
+		<mid0>6</mid0>
+		<nme>Ensure Wifi Off</nme>
+		<State sr="con0">
+			<code>142</code>
+			<pin>true</pin>
+			<Str sr="arg0" ve="3">Wifi On</Str>
+		</State>
+		<State sr="con1">
+			<code>165</code>
+			<Str sr="arg0" ve="3">%WIFI</Str>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">on</Str>
+		</State>
+		<Time sr="con2">
+			<fh>-1</fh>
+			<fm>-1</fm>
+			<rep>2</rep>
+			<repval>2</repval>
+			<th>-1</th>
+			<tm>-1</tm>
+		</Time>
 	</Profile>
 	<Profile sr="prof2" ve="2">
 		<cdate>1426251070573</cdate>
@@ -65,9 +104,11 @@
 	</Profile>
 	<Profile sr="prof4" ve="2">
 		<cdate>1426458750584</cdate>
-		<edate>1427840829791</edate>
+		<edate>1427845958473</edate>
+		<flags>2</flags>
 		<id>4</id>
 		<mid0>5</mid0>
+		<mid1>6</mid1>
 		<nme>Wifi On</nme>
 		<State sr="con0">
 			<code>140</code>
@@ -107,9 +148,9 @@
 	</Profile>
 	<Project sr="proj0">
 		<cdate>1426249583355</cdate>
-		<mdate>1427839989014</mdate>
+		<mdate>1427845974533</mdate>
 		<name>Base</name>
-		<pids>7,2,4,8,11,14,15</pids>
+		<pids>7,2,4,8,11,15,17,18</pids>
 		<tids>3,5,6,9,10,13</tids>
 		<Img sr="icon" ve="2">
 			<icn>2130837535</icn>
@@ -280,7 +321,7 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 	</Task>
 	<Task sr="task5">
 		<cdate>1426458771786</cdate>
-		<edate>1427843736936</edate>
+		<edate>1427846025874</edate>
 		<id>5</id>
 		<nme>Wifi On</nme>
 		<pri>10</pri>
@@ -323,7 +364,7 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 	</Task>
 	<Task sr="task6">
 		<cdate>1426458846382</cdate>
-		<edate>1427843707908</edate>
+		<edate>1427846035299</edate>
 		<id>6</id>
 		<nme>Wifi Off</nme>
 		<pri>10</pri>
@@ -366,7 +407,7 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 	</Task>
 	<Task sr="task9">
 		<cdate>1426537283491</cdate>
-		<edate>1427840348834</edate>
+		<edate>1427846216299</edate>
 		<id>9</id>
 		<nme>Write Log</nme>
 		<pri>10</pri>
