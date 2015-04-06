@@ -18,6 +18,7 @@
 	<Profile sr="prof15" ve="2">
 		<cdate>1426537255959</cdate>
 		<edate>1427840348834</edate>
+		<flags>2</flags>
 		<id>15</id>
 		<mid0>9</mid0>
 		<mid1>9</mid1>
@@ -102,10 +103,35 @@
 			<Str sr="arg0" ve="3">Photo Time</Str>
 		</State>
 	</Profile>
+	<Profile sr="prof20" ve="2">
+		<cdate>1427993416256</cdate>
+		<edate>1428059858900</edate>
+		<flags>2</flags>
+		<id>20</id>
+		<mid0>19</mid0>
+		<nme>Ensure SSH</nme>
+		<App sr="con0" ve="2">
+			<cls0>com.icecoldapps.sshserver.viewStart</cls0>
+			<label0>SSH Server</label0>
+			<pin>true</pin>
+			<pkg0>com.icecoldapps.sshserver</pkg0>
+		</App>
+		<Time sr="con1">
+			<fh>-1</fh>
+			<fm>-1</fm>
+			<rep>1</rep>
+			<repval>1</repval>
+			<th>-1</th>
+			<tm>-1</tm>
+		</Time>
+		<State sr="con2">
+			<code>142</code>
+			<Str sr="arg0" ve="3">Wifi On</Str>
+		</State>
+	</Profile>
 	<Profile sr="prof4" ve="2">
 		<cdate>1426458750584</cdate>
-		<edate>1427845958473</edate>
-		<flags>2</flags>
+		<edate>1428244494107</edate>
 		<id>4</id>
 		<mid0>5</mid0>
 		<mid1>6</mid1>
@@ -115,20 +141,16 @@
 			<Int sr="arg0" val="75"/>
 			<Int sr="arg1" val="100"/>
 		</State>
-		<State sr="con1">
-			<code>10</code>
-			<Int sr="arg0" val="0"/>
-		</State>
 	</Profile>
 	<Profile sr="prof7" ve="2">
 		<cdate>1426671718861</cdate>
-		<edate>1426684369595</edate>
+		<edate>1427869006585</edate>
 		<flags>2</flags>
 		<id>7</id>
 		<mid0>12</mid0>
 		<nme>Photo Time</nme>
 		<Time sr="con0">
-			<fh>6</fh>
+			<fh>5</fh>
 			<fm>0</fm>
 			<th>19</th>
 			<tm>30</tm>
@@ -148,10 +170,10 @@
 	</Profile>
 	<Project sr="proj0">
 		<cdate>1426249583355</cdate>
-		<mdate>1427845974533</mdate>
+		<mdate>1427993416268</mdate>
 		<name>Base</name>
-		<pids>7,2,4,8,11,15,17,18</pids>
-		<tids>3,5,6,9,10,13</tids>
+		<pids>7,2,4,8,11,15,17,18,20</pids>
+		<tids>3,5,6,9,10,13,19</tids>
 		<Img sr="icon" ve="2">
 			<icn>2130837535</icn>
 		</Img>
@@ -261,6 +283,22 @@ var formatteddate = f.replace(/(yyyy|yy|mmmm|mmm|mm|dddd|ddd|dd|hh|nn|ss|a\/p)/g
 			<rhs>0</rhs>
 			<Str sr="arg0" ve="3">%par1</Str>
 			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task19">
+		<cdate>1427993320795</cdate>
+		<edate>1427993420599</edate>
+		<id>19</id>
+		<nme>Start SSH</nme>
+		<Action sr="act0" ve="3">
+			<code>20</code>
+			<App sr="arg0">
+				<appClass>com.icecoldapps.sshserver.viewStart</appClass>
+				<appPkg>com.icecoldapps.sshserver</appPkg>
+				<label>SSH Server</label>
+			</App>
+			<Str sr="arg1" ve="3"/>
 			<Int sr="arg2" val="0"/>
 		</Action>
 	</Task>
