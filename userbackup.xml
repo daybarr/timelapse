@@ -132,6 +132,7 @@
 	<Profile sr="prof4" ve="2">
 		<cdate>1426458750584</cdate>
 		<edate>1428244494107</edate>
+		<flags>2</flags>
 		<id>4</id>
 		<mid0>5</mid0>
 		<mid1>6</mid1>
@@ -144,15 +145,14 @@
 	</Profile>
 	<Profile sr="prof7" ve="2">
 		<cdate>1426671718861</cdate>
-		<edate>1427869006585</edate>
-		<flags>2</flags>
+		<edate>1428350680897</edate>
 		<id>7</id>
 		<mid0>12</mid0>
 		<nme>Photo Time</nme>
 		<Time sr="con0">
-			<fh>5</fh>
+			<fh>4</fh>
 			<fm>0</fm>
-			<th>19</th>
+			<th>20</th>
 			<tm>30</tm>
 		</Time>
 	</Profile>
