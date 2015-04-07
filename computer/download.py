@@ -3,8 +3,10 @@ from __future__ import print_function
 
 import argparse
 import datetime
+import errno
 import logging
 import os
+import re
 import sys
 import time
 
@@ -19,6 +21,10 @@ MAX_PER_CONN = 20
 DEFAULT_SRC_DIR = "/mnt/sdcard/timelapse"
 DEFAULT_DEST_DIR = os.path.expanduser("~/timelapse")
 DEFAULT_PRIVATE_KEY = os.path.expanduser("~/.ssh/id_rsa")
+
+PHOTO_RE = re.compile(
+    r'^timelapse.(?P<year>\d\d\d\d)-(?P<month>\d\d)-(?P<day>\d\d)-(?P<hour>\d\d)-(?P<minute>\d\d)-(?P<second>\d\d).jpg$'
+)
 
 LOG_FILE_NAME = 'battery.txt'
 
@@ -50,6 +56,14 @@ def parse_args(argv):
         parser.error("--dest-dir {} must exist".format(args.dest_dir))
     return args
 
+def mkdir(dir_name):
+    """Version of os.mkdir that silently does nothing if dir already exists"""
+    try:
+        os.mkdir(dir_name)
+    except OSError as err:
+        if err.errno != errno.EEXIST:
+            raise
+
 def download_and_remove(sftp, remote_file_name, local_file_name):
     logger.info("Downloading %s => %s", remote_file_name, local_file_name)
     sftp.get(remote_file_name, local_file_name)
@@ -69,10 +83,17 @@ def download_some(args):
         file_names = sftp.listdir()
         logger.info("Found %d files", len(file_names))
 
-        images = [name for name in file_names if name.endswith('.jpg')]
+        images = [name for name in file_names if PHOTO_RE.match(name)]
         for i, remote_file_name in enumerate(images[:MAX_PER_CONN]):
             logger.info("Image %d/%d", i+1, len(images))
-            local_file_name = os.path.join(args.dest_dir, remote_file_name)
+            match = PHOTO_RE.match(remote_file_name)
+            assert match
+            day_dir_name = '{year:04d}-{month:02d}-{day:02d}'.format(
+                **{k: int(v) for k, v in match.groupdict().items()}
+            )
+            local_dir_name = os.path.join(args.dest_dir, day_dir_name)
+            mkdir(local_dir_name)
+            local_file_name = os.path.join(local_dir_name, remote_file_name)
             download_and_remove(sftp, remote_file_name, local_file_name)
             some_downloaded = True
 
