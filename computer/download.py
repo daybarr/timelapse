@@ -78,6 +78,7 @@ def download_some(args):
                            password=args.password,
                            private_key=args.private_key) as sftp, \
         sftp.cd(args.src_dir):
+        sftp.timeout = 60
 
         logger.info("Listing files")
         file_names = sftp.listdir()
