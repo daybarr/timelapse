@@ -27,6 +27,7 @@ PHOTO_RE = re.compile(
 )
 
 LOG_FILE_NAME = 'battery.txt'
+LOG_DIR_NAME = 'logs'
 
 def getlogin():
     try:
@@ -106,7 +107,9 @@ def download_some(args):
 
             time.sleep(1)
 
-            local_file_name = os.path.join(args.dest_dir, remote_file_name)
+            local_dir_name = os.path.join(args.dest_dir, LOG_DIR_NAME)
+            mkdir(local_dir_name)
+            local_file_name = os.path.join(local_dir_name, remote_file_name)
             download_and_remove(sftp, remote_file_name, local_file_name)
 
         # Failed log downloads
